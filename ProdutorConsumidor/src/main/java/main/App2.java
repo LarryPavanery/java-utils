@@ -16,13 +16,18 @@ public class App2 {
 
     public static void main(String[] args) {
 
-	// Cria o produtor e manda ele criar 10 pessoas e esperar por mais
-	Produtor produtor = new Produtor(pessoas, 10);
-	// Cria o consumidor e manda ele processar como fila as pessoas
-	Consumidor consumidor = new Consumidor(pessoas);
+	int quantidadeProdutor = 500;
+	// Cria 500 produtores e manda cada um criar 10 pessoas e esperar por
+	// mais,
+	// através de entradas pelo terminal/console
+	for (int i = 0; i < quantidadeProdutor; i++) {
+	    new Produtor(pessoas, 10, "prod-" + i).start();
+	}
 
-	// inicia os processos
-	produtor.start();
-	consumidor.start();
+	// Cria uma quantidade da metade de produtores, a de consumidores e
+	// manda ele processar como fila as pessoas na ordem de fila
+	for (int i = 0; i < quantidadeProdutor / 2; i++) {
+	    new Consumidor(pessoas).start();
+	}
     }
 }

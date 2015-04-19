@@ -17,14 +17,16 @@ public class Consumidor extends Thread {
     @Override
     public void run() {
 	while (true) {
-	    if (!pessoas.isEmpty()) {
-		Pessoa p = pessoas.remove(0);
-		p.setDinheiro(p.getDinheiro() + 50);
-		System.out.println("Pessoa do momento: " + p);
+	    synchronized (pessoas) {
+		if (!pessoas.isEmpty()) {
+		    Pessoa p = pessoas.remove(0);
+		    p.setDinheiro(p.getDinheiro() + 50);
+		    System.out.println("Processou pessoa: " + p);
+		}
 	    }
 
 	    try {
-		Thread.sleep(3000); // 3s
+		Thread.sleep(500); // 0.5s
 	    } catch (InterruptedException e) {
 	    }
 	}
